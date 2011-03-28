@@ -22,13 +22,13 @@ class Transmitter(AgentThreadedBase):
     def __init__(self):
         AgentThreadedBase.__init__(self)
         
-        self.mr=MulticastTransmitter(self.GROUP, self.PORT)
+        self.mt=MulticastTransmitter(self.GROUP, self.PORT)
         
     def h_sensor(self, type, serial, pin, value):
         """
         """
         s=self.TPL % (type, serial, pin, value)
-        self.mr.send(s)
+        self.mt.send(s)
 
 
 _=Transmitter()
