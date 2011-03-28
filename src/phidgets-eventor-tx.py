@@ -63,10 +63,10 @@ def main(debug=False):
         _na=NotifierAgent(APP_NAME, ICON_NAME)
         _na.start()
         
+        from phidgets_eventor.agents.clock import Clock #@Reimport
         clk=Clock(TIME_BASE)
         gobject.timeout_add(TIME_BASE, clk.tick)
-
-        from phidgets_eventor.agents.clock import Clock #@Reimport
+        
         import phidgets_eventor.agents.transmitter  #@UnusedImport
         
         mswitch.publish("__main__", "debug", debug)
