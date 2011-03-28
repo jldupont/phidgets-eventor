@@ -41,17 +41,17 @@ class SignalRx(dbus.service.Object):
                                        )            
 
     def sDin(self, serial, pin, value):
-        self._pub(serial, pin, value)
+        self._pub("din", serial, pin, value)
 
     def sDout(self, serial, pin, value):
-        self._pub(serial, pin, value)
+        self._pub("dout", serial, pin, value)
         
     def sAin(self, serial, pin, value):
-        self._pub(serial, pin, value)
+        self._pub("ain", serial, pin, value)
         
-    def _pub(self, serial, pin, value):
+    def _pub(self, type, serial, pin, value):
         try:
-            mswitch.publish(self.__class__, "sensor", str(serial), int(pin), int(value))
+            mswitch.publish(self.__class__, "sensor", type, str(serial), int(pin), int(value))
             #print("Sensor: serial(%s) pin(%s) value(%s)" % (serial, pin, value))
         except Exception,e:
             print "!!! Signal-RX: exception: %s" % e

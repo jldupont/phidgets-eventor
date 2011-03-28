@@ -10,17 +10,25 @@ class Transmitter(AgentThreadedBase):
     
     GROUP = "239.0.0.1"
     PORT  = 6666
-    COUNT = 10
+
+    TPL="""{
+         "type":   "phidgets-ifk"
+        ,"kind":   %s
+        ,"serial": %s
+        ,"pin":    %s
+        ,"value":  %s
+    };"""
     
     def __init__(self):
         AgentThreadedBase.__init__(self)
         
         self.mr=MulticastTransmitter(self.GROUP, self.PORT)
         
-    def h_sensor(self, serial, pin, value):
+    def h_sensor(self, type, serial, pin, value):
         """
         """
-
+        s=self.TPL % (type, serial, pin, value)
+        self.mr.send(s)
 
 
 _=Transmitter()
