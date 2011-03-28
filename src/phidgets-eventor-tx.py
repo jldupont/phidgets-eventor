@@ -44,6 +44,7 @@ from phidgets_eventor.system import mswitch #@UnusedImport
 mswitch.observe_mode=MSWITCH_OBSERVE_MODE
 mswitch.debugging_mode=MSWITCH_DEBUGGING_MODE
 
+from phidgets_eventor.agents.notifier import notify
 
 def main(debug=False):
     try:
@@ -58,7 +59,7 @@ def main(debug=False):
 
         import phidgets_eventor.agents.adbus #@UnusedImport
 
-        from phidgets_eventor.agents.notifier import notify, NotifierAgent #@Reimport
+        from phidgets_eventor.agents.notifier import NotifierAgent #@Reimport
         _na=NotifierAgent(APP_NAME, ICON_NAME)
         _na.start()
         
