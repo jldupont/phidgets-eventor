@@ -45,5 +45,6 @@ class MulticastTransmitter(object):
         self.socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
     def send(self, packet):
-        self.socket.send(packet)
+        self.socket.send(packet, (self.group, self.port))
+
     
