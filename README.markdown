@@ -4,7 +4,9 @@ Applications
 ------------
 
  - "phidgets-eventor-tx" : transmitter
+   Phidgets related DBus signals are sent as per "Eventor" multicast bridging specification.
 
+ - phidgets-eventor-rx : receiver of "Eventor" DBus signals, translation to local Phidgets-DBus signals
 
 Installation
 ============

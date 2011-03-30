@@ -2,9 +2,9 @@
 # @author Jean-Lou Dupont
 #
 #
-PRJ=eventor
-PKG=eventor
-BASE=/usr/share/eventor
+PRJ=phidgets-eventor
+PKG=phidgets_eventor
+BASE=/usr/share/phidgets_eventor
 APP_BASE=/usr/share
 
 PYTHON=`which python`

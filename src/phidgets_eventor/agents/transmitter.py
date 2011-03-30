@@ -13,11 +13,10 @@ class Transmitter(AgentThreadedBase):
 
     TPL="""{
          "type":   "phidgets-ifk"
-        ,"kind":   %s
-        ,"serial": %s
+        ,"kind":   "%s"
+        ,"serial": "%s"
         ,"pin":    %s
-        ,"value":  %s
-    };"""
+        ,"value":  %s }"""
     
     def __init__(self):
         AgentThreadedBase.__init__(self)
@@ -25,8 +24,6 @@ class Transmitter(AgentThreadedBase):
         self.mt=MulticastTransmitter(self.GROUP, self.PORT)
         
     def h_sensor(self, type, serial, pin, value):
-        """
-        """
         s=self.TPL % (type, serial, pin, value)
         self.mt.send(s)
 

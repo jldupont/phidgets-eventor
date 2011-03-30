@@ -1,5 +1,5 @@
 """
-    Phidgets-Eventor-Tx
+    Phidgets-Eventor-Rx
                 
     Created on 2010-10-21
     @author: jldupont
@@ -23,7 +23,7 @@ DEV_MODE=True
 if os.environ.get("JLD_DEV"):
     print "> DEV MODE"
     this_dir=os.path.dirname(__file__)
-    sys.path.insert(0, os.path.join(this_dir, PKG_NAME))
+    sys.path.insert(0, this_dir)
 else:
     ## make sure to synchronize this with makefile
     sys.path.insert(0, "/usr/share/%s" % PKG_NAME)
@@ -49,15 +49,13 @@ from phidgets_eventor.agents.notifier import notify
 def main(debug=False):
     try:
         
-        import phidgets_eventor.agents.adbus
+        import phidgets_eventor.agents.edbus #@UnusedImport
         
         from phidgets_eventor.res import get_res_path
         icon_path=get_res_path()
         
         from phidgets_eventor.agents.phidgets_eventor_tray import TrayAgent
         _ta=TrayAgent(APP_NAME, icon_path, ICON_NAME, HELP_URL)
-
-        import phidgets_eventor.agents.adbus #@UnusedImport
 
         from phidgets_eventor.agents.notifier import NotifierAgent #@Reimport
         _na=NotifierAgent(APP_NAME, ICON_NAME)
@@ -67,7 +65,7 @@ def main(debug=False):
         clk=Clock(TIME_BASE)
         gobject.timeout_add(TIME_BASE, clk.tick)
         
-        import phidgets_eventor.agents.transmitter  #@UnusedImport
+        import phidgets_eventor.agents.receiver
         
         mswitch.publish("__main__", "debug", debug)
         
