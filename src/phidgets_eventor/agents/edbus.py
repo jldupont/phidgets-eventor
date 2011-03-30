@@ -35,6 +35,24 @@ class SignalHandlerEventor(dbus.service.Object):
 _sh=SignalHandlerEventor()
 
 
+class SignalTxSensors(dbus.service.Object):
+    """
+    DBus signals handler
+    """
+    PATH    = "/State"
+    BUS_NAME= "org.sensors"
+    INTERF  = "org.sensors"
+    
+    def __init__(self):
+        self.bus=dbus.SessionBus()
+        bus_name = dbus.service.BusName(self.BUS_NAME, self.bus)
+        dbus.service.Object.__init__(self, bus_name, self.PATH)
+        
+    @dbus.service.signal(dbus_interface="org.sensors", signature="ssv")
+    def State(self, device_id, sensor_name, sensor_state):
+        """Generated when a sensor changes state"""
+    
+
 class SignalTxPhidgets(dbus.service.Object):
     
     PATH="/Device"
@@ -54,11 +72,18 @@ class SignalTxPhidgets(dbus.service.Object):
     @dbus.service.signal(dbus_interface=IFACE, signature="sii")
     def Ain(self, serial, pin, value):
         """Generated to report state of a analog input"""
+        
+    @dbus.service.signal(dbus_interface=IFACE, signature="sii")
+    def State(self, serial, pin, value):
+        """Generated to report state of a analog input"""
+
 
 class SignalTxAgent(AgentThreadedBase):
     def __init__(self):
         AgentThreadedBase.__init__(self)
         self.tx=SignalTxPhidgets()
+        self.txSensors=SignalTxSensors()
+        
         
     def h_din(self, serial, pin, value):
         self.tx.Din(serial, pin, value)
@@ -68,6 +93,10 @@ class SignalTxAgent(AgentThreadedBase):
         
     def h_ain(self, serial, pin, value):
         self.tx.Ain(serial, pin, value)
+
+    def h_changed(self, kind, serial, pin, value):
+        self.txSensors.State(serial, "%s:%s" % (kind, pin), value)
+        
 
 _stx=SignalTxAgent()
 _stx.start()

@@ -66,6 +66,7 @@ def main(debug=False):
         gobject.timeout_add(TIME_BASE, clk.tick)
         
         import phidgets_eventor.agents.receiver
+        import phidgets_eventor.agents.debouncer
         
         mswitch.publish("__main__", "debug", debug)
         
